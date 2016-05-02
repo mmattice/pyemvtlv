@@ -4,6 +4,25 @@ from pyemvtlv.types.tags.taglist import doftags
 
 class BaseTag(object):
     _tagid = None
+    __type = 'h'
+
+    def __init__(self, hexvalue=None, value=None):
+        if hexvalue is not None and value is not None:
+            raise ValueError('Cannot specify both initialization values')
+        if hexvalue:
+            self._value = unhexlify(hexvalue)
+        else:
+            self._value = value
+
+    def __repr__(self):
+        if not self._value:
+            return "{}()".format(self.__class__.__name__)
+        if self.__type == 'h':
+            return "{}(hexvalue='{}')".format(self.__class__.__name__,
+                                              hexlify(self._value))
+        else:
+            return "{}(hexvalue={})".format(self.__class__.__name__,
+                                            self._value)
 
 
 class TagModule(object):
@@ -23,3 +42,7 @@ class TagModule(object):
         return type(name, (BaseTag, ), {"_tagid": tagid})
 
 sys.modules[__name__] = TagModule(doftags)
+
+# imports we want to be available after we flush sys.modules[__name__].__dict__
+# with the override above
+from binascii import hexlify, unhexlify
