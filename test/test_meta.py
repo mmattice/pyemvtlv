@@ -6,7 +6,7 @@ from pyemvtlv.types.tags import *
 
 
 class TestAvailability(unittest.TestCase):
-    def test1(self):
+    def test_AmountOtherTagID(self):
         a = AmountOther()
         self.assertEquals(a._tagid, '9F03')
 
