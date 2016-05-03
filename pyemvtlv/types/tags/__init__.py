@@ -25,7 +25,10 @@ class BaseTag(object):
                                             self._value)
 
     def __eq__(self, other):
-        return (self._tagid, self._value) == (other._tagid, other._value)
+        if isinstance(other, self.__class__):
+            return (self._tagid, self._value) == (other._tagid, other._value)
+        else:
+            return self._value == other
 
 
 class TagModule(object):
