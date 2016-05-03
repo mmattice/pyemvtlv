@@ -121,3 +121,11 @@ doftags = {
     'FileControlInformationProprietaryTemplate'                : 'A5',
     'FileControlInformationIssuerDiscretionaryData'            : 'BF0C',
 }
+
+# Ingenico specific "EMV" tags
+doftags.update({
+    'TerminalActionCodeDefault'                                : 'DF03',
+    'TerminalActionCodeDenial'                                 : 'DF04',
+    'TerminalActionCodeOnline'                                 : 'DF05',
+    'IssuerScriptResults'                                      : 'DF11',
+})
