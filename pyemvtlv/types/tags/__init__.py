@@ -24,6 +24,9 @@ class BaseTag(object):
             return "{}(hexvalue={})".format(self.__class__.__name__,
                                             self._value)
 
+    def __eq__(self, other):
+        return (self._tagid, self._value) == (other._tagid, other._value)
+
 
 class TagModule(object):
     def __init__(self, doftags):
