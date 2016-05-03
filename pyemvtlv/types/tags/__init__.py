@@ -34,6 +34,8 @@ class TagModule(object):
         self.__doftags = doftags
         # define the list of exported attributes
         self.__all__ = list(doftags.iterkeys())
+        # copy our name from this module's name
+        self.__name__ = __name__
         # create our classes
         for item in doftags:
             self.__dict__[item] = self.createTagClass(item, doftags[item])
