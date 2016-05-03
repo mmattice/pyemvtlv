@@ -1,0 +1,5 @@
+EMV-TLV library for python
+--------------------------
+
+This is a free and open source implementation of the not-quite BER codecs necessary for handling EMV-TLV.
+
