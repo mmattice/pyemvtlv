@@ -1,5 +1,3 @@
-from binascii import hexlify
-
 from pyemvtlv.types import tags
 
 td = {getattr(getattr(tags, n), '_tagid', None): getattr(tags, n)
