@@ -36,7 +36,7 @@ class TagModule(object):
         # store the tags, jic
         self.__doftags = doftags
         # define the list of exported attributes
-        self.__all__ = list(doftags.iterkeys())
+        self.__all__ = list(doftags.keys())
         # copy our name from this module's name
         self.__name__ = __name__
         # create our classes
