@@ -26,6 +26,18 @@ class TestDecodePBER(unittest.TestCase):
         self.assertEquals(res, AuthorisationResponseCode(hexvalue='3030'))
         self.assertEquals(remain, '')
 
+    def test_chain(self):
+        input = '910a90ca8abbfee0be240012711e9f1804000000018615842400021022c3089f35064c142447f11fa2ec0aa18a023030'
+        subs = unhexlify(input)
+        l = []
+        while subs:
+            res, subs = pber_dec(subs)
+            if res:
+                l.append(res)
+        self.assertEquals(l, [IssuerAuthenticationData(hexvalue='90ca8abbfee0be240012'),
+                              IssuerScriptTemplate1(hexvalue='9f1804000000018615842400021022c3089f35064c142447f11fa2ec0aa1'),
+                              AuthorisationResponseCode(hexvalue='3030')])
+
     def test_shortdecodeV(self):
         input = '8a033030'
         self.assertRaisesRegexp(ValueError, 'Insufficient remaining substrate - 1 bytes short', pber_dec, unhexlify(input))
