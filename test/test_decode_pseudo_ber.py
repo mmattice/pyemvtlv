@@ -26,6 +26,18 @@ class TestDecodePBER(unittest.TestCase):
         self.assertEquals(res, AuthorisationResponseCode(hexvalue='3030'))
         self.assertEquals(remain, '')
 
+    def test_shortdecodeV(self):
+        input = '8a033030'
+        self.assertRaisesRegexp(ValueError, 'Insufficient remaining substrate - 1 bytes short', pber_dec, unhexlify(input))
+
+    def test_shortdecodeL(self):
+        input = '8a8201'
+        self.assertRaisesRegexp(ValueError, 'Short decode on length parsing - 1 bytes short', pber_dec, unhexlify(input))
+
+    def test_failfind(self):
+        input = '0a0101'
+        self.assertRaisesRegexp(ValueError, 'Cannot find tagId A', pber_dec, unhexlify(input))
+
 
 if __name__ == '__main__':
     unittest.main()
