@@ -6,6 +6,8 @@ from pyemvtlv.types.tags import *
 from pyemvtlv.codec.binary.encoder import encode as pber_enc
 from binascii import unhexlify
 
+from builtins import map
+
 
 class TestEncodePBER(unittest.TestCase):
     def test_encode0x91(self):
@@ -27,7 +29,7 @@ class TestEncodePBER(unittest.TestCase):
         input = [IssuerAuthenticationData(hexvalue='90ca8abbfee0be240012'),
                  IssuerScriptTemplate1(hexvalue='9f1804000000018615842400021022c3089f35064c142447f11fa2ec0aa1'),
                  AuthorisationResponseCode(hexvalue='3030')]
-        res = ''.join(map(pber_enc, input))
+        res = b''.join(map(pber_enc, input))
         self.assertEquals(res, unhexlify('910a90ca8abbfee0be240012711e9f1804000000018615842400021022c3089f35064c142447f11fa2ec0aa18a023030'))
 
 

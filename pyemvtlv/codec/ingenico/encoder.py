@@ -1,3 +1,4 @@
+from builtins import object
 from binascii import hexlify
 
 FS = '\x1c'
@@ -19,7 +20,7 @@ class Encoder(object):
             ls = ls[2:]
         return 'T{}:{}:h{}{}'.format(tagId,
                                      ls,
-                                     hexlify(tag._value).upper(),
+                                     hexlify(tag._value).upper().decode('ascii'),
                                      FS)
 
 encode = Encoder()

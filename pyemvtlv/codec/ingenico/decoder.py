@@ -1,3 +1,4 @@
+from builtins import object
 from pyemvtlv.types import tags
 
 td = {getattr(getattr(tags, n), '_tagid', None): getattr(tags, n)
@@ -12,7 +13,7 @@ class Decoder(object):
 
     def __call__(self, substrate):
         i = substrate.index(FS)
-        tlv, substrate = substrate[:i], substrate[i+1:]
+        tlv, substrate = substrate[:i], substrate[i + 1:]
         tag, length, value = tlv.split(':')
         if tag[0] == 'D':
             return None, substrate

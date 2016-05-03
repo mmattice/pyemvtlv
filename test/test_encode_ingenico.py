@@ -1,3 +1,4 @@
+from builtins import map
 from pyemvtlv.codec.binary.decoder import decode as pber_dec
 from pyemvtlv.codec.ingenico.encoder import encode as ing_enc
 import unittest
@@ -19,7 +20,7 @@ class IssuerScriptEncoderTestCase(unittest.TestCase):
         dr = ['T91:0A:h90CA8ABBFEE0BE240012\x1c',
               'T71:1E:h9F1804000000018615842400021022C3089F35064C142447F11FA2EC0AA1\x1c',
               'T8A:02:h3030\x1c']
-        tlvs = map(ing_enc, self.el)
+        tlvs = list(map(ing_enc, self.el))
 
         self.assertEqual(dr, tlvs)
 

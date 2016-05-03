@@ -1,3 +1,4 @@
+from builtins import object
 import sys
 from pyemvtlv.types.tags.taglist import doftags
 
@@ -9,7 +10,9 @@ class BaseTag(object):
     def __init__(self, hexvalue=None, value=None):
         if hexvalue is not None and value is not None:
             raise ValueError('Cannot specify both initialization values')
-        if hexvalue:
+        if hexvalue is None and value is None:
+            raise ValueError('Must specify initialization value')
+        if hexvalue is not None:
             self._value = unhexlify(hexvalue)
         else:
             self._value = value
@@ -18,11 +21,11 @@ class BaseTag(object):
         if not self._value:
             return "{}()".format(self.__class__.__name__)
         if self.__type == 'h':
-            return "{}(hexvalue='{}')".format(self.__class__.__name__,
-                                              hexlify(self._value))
+            return "%s(hexvalue=u'%s')" % (self.__class__.__name__,
+                                           hexlify(self._value).decode('ascii'))
         else:
             return "{}(hexvalue={})".format(self.__class__.__name__,
-                                            self._value)
+                                            str(self._value))
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):

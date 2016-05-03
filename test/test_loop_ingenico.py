@@ -1,3 +1,4 @@
+from __future__ import print_function
 from pyemvtlv.codec.ingenico import decoder as ingdec
 from pyemvtlv.codec.ingenico import encoder as ingenc
 from pyemvtlv.codec.binary import decoder as berdec
@@ -23,7 +24,7 @@ class RecodeTestCase(unittest.TestCase):
         for y in ingdecodelist:
             berencodelist.append(berenc.encode(y))
 
-        subs = ''.join(berencodelist)
+        subs = b''.join(berencodelist)
         berdecodelist = []
         while subs:
             y, subs = berdec.decode(subs)
@@ -33,7 +34,7 @@ class RecodeTestCase(unittest.TestCase):
         for y in berdecodelist:
             ingencodelist.append(ingenc.encode(y))
 
-        teststring = ''.join(ingencodelist)
+        teststring = b''.join(ingencodelist)
         self.assertEqual(self.startstring, teststring)
 
     def testSingle(self):
@@ -52,11 +53,11 @@ class RecodeTestCase(unittest.TestCase):
             results.append(hexlify(b))
             c, remainder = berdec.decode(b)
             results.append(c)
-            self.assertEquals(remainder, '')
+            self.assertEquals(remainder, b'')
             d = ingenc.encode(c)
             results.append(d)
             if subs != d:
-                print results
+                print(results)
             self.assertEqual(subs, d)
 
 if __name__ == '__main__':

@@ -1,4 +1,9 @@
+from builtins import zip
+from builtins import range
+from builtins import object
+from builtins import bytes
 from pyemvtlv.types import tags
+from functools import reduce
 
 td = {getattr(getattr(tags, n), '_tagid', None): getattr(tags, n)
       for n in dir(tags) if getattr(getattr(tags, n), '_tagid', None)}
@@ -8,7 +13,7 @@ def parsetag(x):
     substrate = x
     firstOctet = substrate[0]
     substrate = substrate[1:]
-    t = ord(firstOctet)
+    t = firstOctet
     tagClass = t & 0xC0
     tagFormat = t & 0x20
     tagId = t
@@ -18,7 +23,7 @@ def parsetag(x):
                 raise Exception(
                     'Short octet stream on long tag decoding'
                 )
-            t = ord(substrate[0])
+            t = substrate[0]
             tagId = tagId << 8 | t
             substrate = substrate[1:]
             if not t & 0x80:
@@ -30,14 +35,14 @@ def bytestringtoint(s):
     add = lambda x, y : x + y
     return reduce(add, [ord(x) * 256 ** y
                         for x, y in zip(list(s),
-                                        range(len(s) - 1, -1, -1))])
+                                        list(range(len(s) - 1, -1, -1)))])
 
 
 def parselen(x):
     substrate = x
     firstOctet = substrate[0]
     substrate = substrate[1:]
-    t = ord(firstOctet)
+    t = firstOctet
     if t & 0x80:
         l = t & 0x7f
         if len(substrate) < l:
@@ -55,7 +60,7 @@ class Decoder(object):
         self.__taghash = taghash
 
     def __call__(self, value):
-        cl, f, tag, substrate = parsetag(value)
+        cl, f, tag, substrate = parsetag(bytes(value))
         tagid = "%X" % tag
         if tagid not in self.__taghash:
             raise ValueError('Cannot find tagId {}'.format(tagid))
