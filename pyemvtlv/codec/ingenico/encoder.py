@@ -35,13 +35,6 @@ from binascii import hexlify
 FS = '\x1c'
 
 
-def printable(s):
-    for c in s:
-        if not (c.isalnum() or c.isspace()):
-            return False
-    return True
-
-
 class Encoder(object):
     def __call__(self, tag):
         tagId = tag._tagid

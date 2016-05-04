@@ -77,10 +77,18 @@ class TestDecodePBER(unittest.TestCase):
         input = '8a8201'
         self.assertRaisesRegexp(ValueError, 'Short decode on length parsing - 1 bytes short', pber_dec, unhexlify(input))
 
+    def test_shortdecodeT(self):
+        input = '9f'
+        self.assertRaisesRegexp(ValueError, 'Short octet stream on long tag decoding', pber_dec, unhexlify(input))
+
     def test_failfind(self):
         input = '0a0101'
         self.assertRaisesRegexp(ValueError, 'Cannot find tagId A', pber_dec, unhexlify(input))
 
+    def test_decodelong(self):
+        input = '8a820101' + '00' * 257
+        res, remain = pber_dec(unhexlify(input))
+        self.assertEquals(res, AuthorisationResponseCode(hexvalue='00' * 257))
 
 if __name__ == '__main__':
     unittest.main()

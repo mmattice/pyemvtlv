@@ -141,6 +141,11 @@ class Decode3305TestCase(unittest.TestCase):
     def testT9F53(self):
         self.assertEqual(self.decodelist[38], b'\xdc\x40\x04\xf8\x00')
 
+class CheckFailures(unittest.TestCase):
+    def testUnknownTag(self):
+        ts = 'T0F:07:hA0000000031010<FS>'.replace('<FS>', '\x1c')
+        self.assertRaises(ValueError, ing_dec, ts)
+
 
 if __name__ == '__main__':
     unittest.main()

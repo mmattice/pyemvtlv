@@ -51,7 +51,7 @@ def parsetag(x):
     if (tagId & 0x1F) == 0x1F:
         while 1:
             if not substrate:
-                raise Exception(
+                raise ValueError(
                     'Short octet stream on long tag decoding'
                 )
             t = substrate[0]
@@ -64,7 +64,7 @@ def parsetag(x):
 
 def bytestringtoint(s):
     add = lambda x, y : x + y
-    return reduce(add, [ord(x) * 256 ** y
+    return reduce(add, [x * 256 ** y
                         for x, y in zip(list(s),
                                         list(range(len(s) - 1, -1, -1)))])
 
