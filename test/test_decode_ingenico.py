@@ -36,15 +36,15 @@ import unittest
 
 class OctetStringDecoderTestCase(unittest.TestCase):
     def testT4F(self):
-        self.assertEquals(ing_dec('T4F:07:hA0000000031010\x1c'),
+        self.assertEqual(ing_dec('T4F:07:hA0000000031010\x1c'),
                           (ApplicationDedicatedFileName(value=b'\xa0\x00\x00\x00\x03\x10\x10'), ''))
 
     def testT50(self):
-        self.assertEquals(ing_dec('T50:0B:aVisa Credit\x1c'),
+        self.assertEqual(ing_dec('T50:0B:aVisa Credit\x1c'),
                           (ApplicationLabel(value='Visa Credit'), ''))
 
     def testT57(self):
-        self.assertEquals(ing_dec('T57:13:h4888930000000000D12341234432143214321F\x1c'),
+        self.assertEqual(ing_dec('T57:13:h4888930000000000D12341234432143214321F\x1c'),
                           (Track2EquivalentData(value=b'H\x88\x93\x00\x00\x00\x00\x00\xd1#A#D2\x142\x142\x1f'), ''))
 
 

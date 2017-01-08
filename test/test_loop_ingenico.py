@@ -79,12 +79,12 @@ class RecodeTestCase(unittest.TestCase):
             results = []
             a, remainder = ingdec.decode(subs)
             results.append(a)
-            self.assertEquals(remainder, '')
+            self.assertEqual(remainder, '')
             b = berenc.encode(a)
             results.append(hexlify(b))
             c, remainder = berdec.decode(b)
             results.append(c)
-            self.assertEquals(remainder, b'')
+            self.assertEqual(remainder, b'')
             d = ingenc.encode(c)
             results.append(d)
             if subs != d:
