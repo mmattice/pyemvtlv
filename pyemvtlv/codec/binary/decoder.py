@@ -64,9 +64,8 @@ def parsetag(x):
 
 def bytestringtoint(s):
     add = lambda x, y : x + y
-    return reduce(add, [x * 256 ** y
-                        for x, y in zip(list(s),
-                                        list(range(len(s) - 1, -1, -1)))])
+    vals = [ (x, len(s)-i-1) for i, x in enumerate(s) ]
+    return reduce(add, [x * 256 ** y for x,y in vals])
 
 
 def parselen(x):
